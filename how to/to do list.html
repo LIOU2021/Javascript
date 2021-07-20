@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        body {
+            margin: 0;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        .header {
+            /* padding-top: 1px; */
+            background-color: cornflowerblue;
+            text-align: center;
+            height: 80px;
+        }
+
+        .header h2 {
+            margin-top: 0px;
+            padding-top: 5px;
+            height: 30%;
+
+
+        }
+
+        .content {
+            width: 70%;
+            margin: 0 auto;
+        }
+
+        input {
+            height: 25px;
+            width: 75%;
+            border: none;
+        }
+
+        #addBtn {
+            margin: 0;
+            height: 25px;
+            background-color: #d9d9d9;
+            width: 25%;
+            cursor: pointer;
+            padding: 5px
+        }
+
+        ul li:nth-child(even) {
+            background: rgb(204, 198, 198);
+        }
+
+        ul li:nth-child(odd) {
+            background: #e0dddd;
+        }
+        
+        ul{
+            margin-top:0px;
+            padding:0px;
+        }
+        ul li {
+            position: relative;
+            padding:15px;
+            cursor: pointer;
+            list-style-type: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        ul li:hover{
+            background-color: rgb(207, 205, 205);
+        }
+        ul li.checked{
+            text-decoration: line-through;
+            background:#888
+        }
+        
+        ul li.checked::before{
+            content: "✓ ";
+            margin: 0px 0px 0px 0px;
+            padding:0px;
+        }
+
+        .close{
+            position: absolute;
+            right: 0px;
+            margin-top: -15px;
+            padding: 15px;
+            font-size: 20px;
+            width: 50px;
+            height: 100%;
+            text-align: center;
+        }
+        .close:hover{
+            background-color: red;
+        }
+    </style>
+
+    <script>
+        window.onload=function(){
+            var liLen=document.querySelectorAll("ul li").length;
+            for(i=0; i<liLen; i++){
+                var span = document.createElement("span");
+                var txt = document.createTextNode("\u00D7");
+                span.appendChild(txt);
+                span.className = "close";
+                document.querySelectorAll("ul li")[i].appendChild(span);
+                document.querySelectorAll("ul li")[i].onclick=function(){
+                    this.classList.toggle("checked");
+                }
+                document.querySelectorAll(".close")[i].onclick=function(){
+                    this.parentElement.style.display="none";
+                }
+            }
+
+            document.getElementById("addBtn").onclick=function(){
+                var inputValue=document.getElementById("myInput").value;
+                if(inputValue==''){
+                    alert("請輸入 ...");
+                    return;
+                }
+                var item=document.createElement("li");
+                var t = document.createTextNode(inputValue);
+                item.appendChild(t)
+                document.getElementsByTagName("ul")[0].appendChild(item);
+                document.getElementById("myUL").lastChild.onclick=function(){
+                    this.classList.toggle("checked");
+                }
+
+                var liLength=document.getElementsByTagName("li").length;
+                var span = document.createElement("span");
+                var txt = document.createTextNode("\u00D7");
+                span.appendChild(txt);
+                span.className = "close";
+                document.getElementsByTagName("li")[liLength-1].appendChild(span);
+                document.querySelectorAll(".close")[liLength-1].onclick=function(){
+                    this.parentElement.style.display="none";
+                }
+            };
+        }
+    </script>
+
+</head>
+
+<body>
+    <div class="header">
+        <h2>My To Do List</h2>
+        <div class="content">
+            <input type="text" id="myInput" style="float: left;" placeholder="Title...">
+            <p id="addBtn" style="float: left;">Add</p>
+        </div>
+
+
+    </div>
+
+    <ul id="myUL">
+        <li>AAAAAAA</li>
+        <li class="checked">BBBBBB</li>
+        <li>CCCCC</li>
+    </ul>
+</body>
+
+</html>
