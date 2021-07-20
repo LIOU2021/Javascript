@@ -1,0 +1,30 @@
+<html>
+<head>
+	<title>test 123</title>
+	<style>
+	span{border: 1px black solid; padding:2px}
+	</style>
+	
+	<script>
+		function getData(e){
+			var req=new XMLHttpRequest();
+			req.open("get","http://127.0.0.1/"+e+".html");
+			req.onload=function(){
+				var content=document.getElementById("content");
+				content.innerHTML=this.responseText;
+				//alert(this.responseText);
+			}
+			req.send();
+		}
+	</script>
+</head>
+
+<body>
+<span onclick="getData('change01');">new</span>
+<span onclick="getData('change02');">hot</span>
+
+<div id="content" > this is content </div>
+
+</body>
+
+</html>
