@@ -60,19 +60,20 @@
         var len = $(this).val().length;
         var firstWord = $(this).val()[0];
         var lastWord = $(this).val()[len - 1];
-        if (firstWord == "\"" && lastWord == "\"") {//如果使用雙引號將會變成絕對搜尋
+        if (firstWord == "\"" && lastWord == "\"" && len>=2) {//如果使用雙引號將會變成絕對搜尋
           var value = $(this).val();
           $("#myTable tr").toggle(false);
           $("#myTable tr").each(function () {
 
             $(this).children().each(function (i, v) {
-              // if (i == 0) {
-              //   console.log("value:" + value);
-              //   console.log($(this).text());
-              //   console.log(value.indexOf("\""+$(this).text()+"\""));
-              // } 
+               if (i == 0) {
+                 console.log("value:" + value);
+                 console.log($(this).text());
+                 console.log(value.indexOf("\""+$(this).text()+"\""));
+				 console.log($(this).innerText);
+               } 
               if (value.indexOf("\"" + $(this).text() + "\"") > -1) {
-                $("#myTable tr").eq(i).toggle(true);
+                $(this).parent().toggle(true);
                 // console.log("change!!");
               }
             })
