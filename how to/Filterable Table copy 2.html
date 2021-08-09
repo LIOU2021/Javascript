@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+  <div class="container mt-3">
+    <h2>Filterable Table-2</h2>
+    <p>Type something in the input field to search the table for first names, last names or emails:</p>
+    <input class="form-control" id="myInput" type="text" placeholder="Search..">
+    <br>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Firstname</th>
+          <th>Lastname</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody id="myTable">
+        <tr>
+          <td>John</td>
+          <td>Doe</td>
+          <td>john@example.com</td>
+        </tr>
+        <tr>
+          <td>Mary</td>
+          <td>Moe</td>
+          <td>mary@mail.com</td>
+        </tr>
+        <tr>
+          <td>July</td>
+          <td>Dooley</td>
+          <td>july@greatstuff.com</td>
+        </tr>
+        <tr>
+          <td>Anja</td>
+          <td>Ravendale</td>
+          <td>a_r@test.com</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>Note that we start the search in tbody, to prevent filtering the table headers.</p>
+  </div>
+
+  <script>
+    $(document).ready(function () {
+      $("#myInput").on("keyup", function () {
+
+        var len = $(this).val().length;
+        var firstWord = $(this).val()[0];
+        var lastWord = $(this).val()[len - 1];
+        if (firstWord == "\"" && lastWord == "\"") {//如果使用雙引號將會變成絕對搜尋
+          var value = $(this).val();
+          $("#myTable tr").toggle(false);
+          $("#myTable tr").each(function () {
+
+            $(this).children().each(function (i, v) {
+              // if (i == 0) {
+              //   console.log("value:" + value);
+              //   console.log($(this).text());
+              //   console.log(value.indexOf("\""+$(this).text()+"\""));
+              // } 
+              if (value.indexOf("\"" + $(this).text() + "\"") > -1) {
+                $("#myTable tr").eq(i).toggle(true);
+                // console.log("change!!");
+              }
+            })
+          })
+        } else {
+          var value = $(this).val().toLowerCase();
+          $("#myTable tr").each(function () {//這裡可以把filter改成each，因為這只是單純的為了要在後面逐個執行判斷
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)//注意這裡一定要this.toggle
+          });//如果直接選div.toggle這樣toggle裡面的this判斷為真時，影響效果的是選取的整個div，但我們只要當前的，所以選用this
+
+        }
+
+        // $("#myTable tr").each(function () {//這裡可以把filter改成each，因為這只是單純的為了要在後面逐個執行判斷
+        //     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)//注意這裡一定要this.toggle
+        //   });//如果直接選div.toggle這樣toggle裡面的this判斷為真時，影響效果的是選取的整個div，但我們只要當前的，所以選用this
+
+
+      });
+    });
+
+// 參考 toggle https://www.w3school.com.cn/jquery/effect_toggle.asp
+//當toggle內為真時，會讓當前的物件或顯示；反之為假時，就會隱藏物件
+
+// 透過indexOf去讀取輸入視窗的內容來判斷要讓什麼物件顯示(true)或隱藏(false)，當使用者輸入欄位為空的時候，所有資料都會為true，也就都會顯示。
+
+// ref: https://www.w3schools.com/bootstrap4/tryit.asp?filename=trybs_filters_table&stacked=h
+  </script>
+
+</body>
+
+</html>
